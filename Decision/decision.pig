@@ -1,0 +1,18 @@
+profile = load 'merged' using PigStorage(',');
+filtered1 = filter profile by ($25 > 50.0);
+filtered2 = filter filtered1 by ($27 < 0.40);
+filtered3 = filter filtered2 by ($26 >10.0);
+filtered4 = filter filtered3 by ($30 is not null);
+filtered5 = filter filtered4 by ($5 is not null);
+filtered6 = filter filtered5 by ($14 is not null);
+filtered7 = filter filtered6 by ($24 is not null);
+ave = foreach filtered6 generate *, ($5 + $14 + $30)/3;
+rehab = foreach ave generate *, $17 * 25;
+closing = foreach rehab generate *, $31*0.08;
+totalcost = foreach closing generate *, $32 + $33;
+maxbid = foreach totalcost generate *, $31 - $34;
+diff = foreach maxbid generate *, $35 - $24;
+profit = foreach diff generate *, $36 - $34;
+profitper = foreach profit generate *, $37/$31;
+avesize = foreach profitper generate *, $31/$17;
+STORE avesize into 'Decision' using PigStorage(',');

@@ -1,0 +1,15 @@
+Property addresses from Walkscore and Zillow are different from other data sources. Therefore the purpose of this data cleaning step is to converting these addresses into a uniform format. 
+
+Please find sample data in the folder 'sample_data'.
+For Walkscore data and materials, please find them in 'ReplaceWalkAddr' folder.
+For Zillow data and materials, please find them in 'ReplaceWalkZillow' folder.
+
+The cleaning steps are as following:
+
+1. The addresses from raw data are extracted using a pig program called 'extractAddrWalk.pig' or 'extractAddrZillow.pig'. The result 'part-m-00000' is saved in 'walk' or 'zillow' folder.
+
+2. The result from step1 is used as input for a mapreduce job called 'convertAddress.java', which is universal for Walkscore and Zillow data. This program converts these raw addresses into the same format. The result is saved in 'out' folder.
+
+3. The addresses in raw data are replaced by the new addresses using a pig program called 'replaceAddrWalk.pig' or 'replaceAddrZillow.pig'. The result is save in 'walk_new' or 'zillow_new' folder.
+
+Sample data and results are provided along with the codes.

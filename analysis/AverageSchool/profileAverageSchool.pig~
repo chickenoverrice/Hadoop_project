@@ -1,0 +1,7 @@
+profile = load 'selected' using PigStorage(',') as (price:double, school:double);
+newid = foreach profile generate (year-1800)*20/208 as nid, price, school;
+grouped = group newid by nid;
+averagePrice = FOREACH grouped {
+	GENERATE group, AVG(profile.price);
+}
+STORE averagePrice into 'Average' using PigStorage(',');
